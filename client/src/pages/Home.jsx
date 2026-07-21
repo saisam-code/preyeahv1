@@ -50,18 +50,18 @@ export default function Home() {
         setBranches(branchList);
 
         const [rolesTotal, beyondTotal, perBranch] = await Promise.all([
-          fetchRoles({ limit: 1 }).then((r) => r.meta.total),
-          fetchBeyond({ limit: 1 }).then((r) => r.meta.total),
-          Promise.all(
-            branchList.map(async (b) => {
-              const [roles, beyond] = await Promise.all([
-                fetchRoles({ branch: b, limit: 1 }).then((r) => r.meta.total),
-                fetchBeyond({ branch: b, limit: 1 }).then((r) => r.meta.total),
-              ]);
-              return [b, { roles, beyond }];
-            })
-          ),
-        ]);
+  fetchRoles({ limit: 1 }).then((r) => r?.meta?.total ?? 0),
+  fetchBeyond({ limit: 1 }).then((r) => r?.meta?.total ?? 0),
+  Promise.all(
+    branchList.map(async (b) => {
+      const [roles, beyond] = await Promise.all([
+        fetchRoles({ branch: b, limit: 1 }).then((r) => r?.meta?.total ?? 0),
+        fetchBeyond({ branch: b, limit: 1 }).then((r) => r?.meta?.total ?? 0),
+      ]);
+      return [b, { roles, beyond }];
+    })
+  ),
+]);
 
         if (cancelled) return;
         setTotals({ roles: rolesTotal, beyond: beyondTotal });
