@@ -8,7 +8,7 @@ mongoose.connect(process.env.MONGO_URI).then(async () => {
     console.log(`Refusing — ${count} admin account(s) already exist. Delete them first if you really mean to replace.`);
     process.exit(1);
   }
-  await Admin.create({ name: 'Your Name', email: 'admin@preyeah.dev', password: 'ChangeThisPassword123' });
+  await Admin.create({ name: 'Admin', email: 'Admin@preyeah.dev', password: '$@!Sam 18.'});
   console.log('Admin created');
   process.exit(0);
 });
